@@ -1,5 +1,6 @@
 package org.shaw.go.scrawler.base;
 
+import org.shaw.go.scrawler.main.DPCrawlerHive;
 import org.shaw.go.scrawler.bean.HiveConfig;
 
 /**
@@ -9,6 +10,7 @@ public class HiveFactory {
 
 
     private final static int DEFAULT_COUNT = 1;
+    private final static Class DEFAULT_CLAZZ = DPCrawlerHive.class;
 
     private static CrawlerHive hive;
 
@@ -24,9 +26,15 @@ public class HiveFactory {
                 if(hive == null){
                     HiveConfig cfg = config;
                     if( cfg == null) {
-                        cfg = new HiveConfig(DEFAULT_COUNT);
+                        cfg = new HiveConfig(DEFAULT_COUNT,DEFAULT_CLAZZ);
                     }
-                    hive = new DPCrawlerHive();
+                    try {
+                        hive = (CrawlerHive) cfg.getClazz().newInstance();
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                     hive.setConfig(cfg);
                 }
             }

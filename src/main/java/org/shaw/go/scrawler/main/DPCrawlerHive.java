@@ -1,8 +1,9 @@
-package org.shaw.go.scrawler.base;
+package org.shaw.go.scrawler.main;
 
+import org.shaw.go.scrawler.base.AsyncJob;
+import org.shaw.go.scrawler.base.BaseCrawlerHive;
+import org.shaw.go.scrawler.base.Scrawler;
 import org.shaw.go.scrawler.bean.CallContext;
-import org.shaw.go.scrawler.bean.DPCallRequest;
-import org.shaw.go.scrawler.main.DPShopScrawler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,12 +21,11 @@ public class DPCrawlerHive extends BaseCrawlerHive {
     public void goCraw() {
 
         List<Future<Boolean>> end = new ArrayList<Future<Boolean>>();
-
+        DPCallRequest req = new DPCallRequest();
+        req.setShopId(0);
         for(int i = 0 ; i< getCrawlers(); i++){
-            CallContext<DPCallRequest> callContext = new CallContext<DPCallRequest>();
-            DPCallRequest req = new DPCallRequest();
-            req.setShopId(500000);
 
+            CallContext<DPCallRequest> callContext = new CallContext<DPCallRequest>();
             callContext.setReq(req);
             Scrawler scrawler = new DPShopScrawler();
             scrawler.setContext(callContext);

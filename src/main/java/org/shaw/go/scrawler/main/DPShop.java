@@ -1,4 +1,4 @@
-package org.shaw.go.scrawler.bean;
+package org.shaw.go.scrawler.main;
 
 /**
  * Created by shawxy on 7/27/16.

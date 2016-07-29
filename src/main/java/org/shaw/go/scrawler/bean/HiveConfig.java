@@ -10,13 +10,15 @@ import lombok.Data;
 public class HiveConfig {
 
     private int count;
+    private Class clazz;
 
     public HiveConfig(){
         super();
     }
 
-    public HiveConfig(int count){
+    public HiveConfig(int count,Class clazz){
         this.count = count;
+        this.clazz = clazz;
     }
 
 

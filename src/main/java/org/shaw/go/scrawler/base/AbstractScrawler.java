@@ -13,15 +13,19 @@ public abstract class AbstractScrawler<T,R> implements Scrawler{
 
     protected CallContext<R> callContext;
 
+    protected String scrawlerName;
+
 
     public void setContext(CallContext context){
        this.callContext = context;
     }
 
+    public void setName(String name){this.scrawlerName = name; }
+
     protected abstract Document call(R req);
 
 
-    protected abstract R processCallRequest(R req);
+    protected abstract R processCallRequest(R req , boolean needSpecial);
 
     protected abstract ScrawlerResult<T> doParse( Document doc,R req);
 
@@ -31,12 +35,13 @@ public abstract class AbstractScrawler<T,R> implements Scrawler{
 
     public void doScraw(){
 
+
         for(;;){
 
             R req = callContext.getReq();
             Document doc = call(req);
             if(doc == null){
-                callContext.setReq(processCallRequest(req));
+                callContext.setReq(processCallRequest(req,false));
                 continue;
             }
 
@@ -45,7 +50,7 @@ public abstract class AbstractScrawler<T,R> implements Scrawler{
                 break;
             }
 
-            processCallRequest(req);
+            processCallRequest(req,false);
 
         }
 
